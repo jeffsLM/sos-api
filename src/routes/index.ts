@@ -1,17 +1,15 @@
 import { Router } from 'express';
 
-import usersRouter from './users.routes';
-import sessionsRouter from './sessions.routes';
-import coursesRouter from './courses.routes';
-import moduleRouter from './module.routes';
-import studentRouter from './student.routes';
+import authRouter from './auth.routes';
+import userRouter from './user.routes';
+import ticketRouter from './tickets.routes';
+import patientRecordsRouter from './patientRecords.routes';
 
 const routes = Router();
 
-routes.use('/users', usersRouter);
-routes.use('/sessions', sessionsRouter);
-routes.use('/courses', coursesRouter);
-routes.use('/modules', moduleRouter);
-routes.use('/students', studentRouter);
+routes.use('/auth', authRouter);
+routes.use('/user', userRouter);
+routes.use('/ticket', ticketRouter);
+
 
 export default routes;

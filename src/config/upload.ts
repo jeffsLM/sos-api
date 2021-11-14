@@ -7,6 +7,7 @@ import config from '../config';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
+
 const storageTypes = {
   local: multer.diskStorage({
     destination: tmpFolder,
@@ -19,7 +20,7 @@ const storageTypes = {
   }),
   s3: multerS3({
     s3: new aws.S3(),
-    bucket: config.awsBucket,
+    bucket: process.env.AWS_BUCKET || 'meu-bucket',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (request, file, callback) => {

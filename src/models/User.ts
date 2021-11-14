@@ -1,9 +1,8 @@
 export default interface User {
-  id: string;
-  name: string;
+  num_func: number;
+  nome: string;
+  setor?: string;
   email: string;
-  password?: string;
-  teacher: boolean;
-  created_at: string;
-  updated_at: string;
+  data_insercao?: Date;
+  senha: string;
 }
