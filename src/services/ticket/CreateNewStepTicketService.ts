@@ -17,6 +17,10 @@ interface Request {
   emailCopia:string[];
 }
 
+interface  MaxId {
+  id_mensagem :string
+}
+
 async function CreateNewStepTicketService({
   ticket,
   num_func,
@@ -24,7 +28,7 @@ async function CreateNewStepTicketService({
   emailCopia,
 }: Request): Promise<Ticket> {
 
-  const { id_mensagem } = await database.oneOrNone<Ticket>(
+  const { id_mensagem } = await database.oneOrNone(
     "select max(id_mensagem)+1 as id_mensagem from SOS_MENSAGEM_TICKET"
   );
 
@@ -66,7 +70,7 @@ async function CreateNewStepTicketService({
     }
   );
 
-  return ticketReturn;
+  return ticketReturn as any;
 }
 
 export default CreateNewStepTicketService;
