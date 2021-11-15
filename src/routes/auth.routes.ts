@@ -10,7 +10,7 @@ authRouter.post('/', async (request, response) => {
     const user = await LoginService({num_func,senha});
 
     return response.json(user);
-  } catch (e:any) {
+  } catch (e) {
     return response.status(401).json({ message: e.message });
   }
 });
