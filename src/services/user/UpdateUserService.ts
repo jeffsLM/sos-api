@@ -29,7 +29,7 @@ async function UpdateUserService({
     },
   );
 
-  return updateReturn;
+  return updateReturn as any;
 }
 
 export default UpdateUserService;

@@ -21,7 +21,7 @@ async function ListTicketService({
   ticket
 }: Request): Promise<Ticket> {
 
-  const ticketReturn = await database.many<Ticket[]>(
+  const ticketReturn = await database.many<Ticket>(
     `select A.ticket,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade
     from SOS_ABERTURA_TICKET A
     inner join SOS_MENSAGEM_TICKET b
@@ -35,7 +35,7 @@ async function ListTicketService({
   );
 
 
-  return ticketReturn;
+  return ticketReturn as any;
 }
 
 export default ListTicketService;

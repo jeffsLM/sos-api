@@ -35,7 +35,7 @@ async function UpdateTicketService({
   );
 
 
-  return ticketReturn;
+  return ticketReturn as any;
 }
 
 export default UpdateTicketService;
