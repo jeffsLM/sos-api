@@ -28,9 +28,11 @@ async function CreateNewStepTicketService({
   emailCopia,
 }: Request): Promise<Ticket> {
 
-  const { id_mensagem } = await database.oneOrNone(
+  const  datamessege  = await database.oneOrNone<MaxId>(
     "select max(id_mensagem)+1 as id_mensagem from SOS_MENSAGEM_TICKET"
   );
+
+  const id_mensagem =  datamessege?.id_mensagem
 
   const ticketAberturaMensagem = await database.oneOrNone<Ticket>(
     "insert into SOS_MENSAGEM_TICKET values ($[id_mensagem],$[ticket],$[num_func],$[mensagem],null,now()) RETURNING *",
