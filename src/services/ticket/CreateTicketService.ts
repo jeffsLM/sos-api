@@ -17,15 +17,24 @@ interface Request {
   emailCopia:string[];
 }
 
+interface ticketMax { ticket:string; }
+
+interface  MaxId {
+  id_mensagem :string
+}
+
+
 async function CreateTicketService({
   num_func,
   prioridade,
   mensagem,
   emailCopia,
 }: Request): Promise<Ticket> {
-  const { ticket } = await database.oneOrNone<Ticket>(
+  const  maxTicket  = await database.oneOrNone<ticketMax>(
     "select max(ticket)+1 as ticket from SOS_ABERTURA_TICKET"
   );
+
+  const ticket = maxTicket?.ticket
 
   const ticketAbertura = await database.oneOrNone<Ticket>(
     "insert into SOS_ABERTURA_TICKET values($[ticket],$[num_func],$[prioridade],now(),null,now()) RETURNING *",
@@ -36,9 +45,11 @@ async function CreateTicketService({
     }
   );
 
-  const { id_mensagem } = await database.oneOrNone<Ticket>(
+  const max_mensagem = await database.oneOrNone<MaxId>(
     "select max(id_mensagem)+1 as id_mensagem from SOS_MENSAGEM_TICKET"
   );
+
+  const id_mensagem = max_mensagem?.id_mensagem
 
   const ticketAberturaMensagem = await database.oneOrNone<Ticket>(
     "insert into SOS_MENSAGEM_TICKET values ($[id_mensagem],$[ticket],$[num_func],$[mensagem],null,now()) RETURNING *",
