@@ -1,16 +1,24 @@
 import database from '../../database';
 import User from '../../models/User';
 
+type Request = {
+  num_func: string;
+}
+
+type Return ={
+  message: string;
+}
+
 async function DeleteUserService({
   num_func
 
-}: string): Promise<User> {
+}: Request): Promise<User> {
 
   if(!num_func){
     throw new Error('código de funcionario não informado');
   }
 
-  const updateReturn = await database.oneOrNone<User>(
+  const updateReturn = await database.oneOrNone(
     `delete FROM  SOS_CAD_USUARIO where num_func = $[num_func]
       `,
     {
@@ -18,10 +26,10 @@ async function DeleteUserService({
     },
   );
 
-  const dataReturn = {
+  const dataReturn=<Return> {
     message: "usuario removido"
   }
-  return dataReturn;
+  return dataReturn as any;
 
 }
 

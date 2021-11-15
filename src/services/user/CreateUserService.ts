@@ -25,9 +25,10 @@ async function CreateUserService({
     throw new Error("usuario já cadastrado");
   }
 
-  const { num_func } = await database.oneOrNone<User>(
+  const  SOS_CAD_USUARIO  = await database.oneOrNone<User>(
     "select max(num_func)+1 as num_func from SOS_CAD_USUARIO"
   );
+  let {num_func}:any = SOS_CAD_USUARIO
 
   const user = await database.one<User>(
     "INSERT INTO SOS_CAD_USUARIO VALUES($[num_func], $[nome],$[setor],$[email],NOW(),$[senha] ) RETURNING *",
