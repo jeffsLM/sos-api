@@ -34,11 +34,12 @@ userRouter.post("/update", async (request, response) => {
 
 userRouter.post("/create", async (request, response) => {
   try {
-    const { num_func, prioridade, mensagem, emailCopia } = request.body;
+    const { num_func, prioridade,assunto, mensagem, emailCopia } = request.body;
 
     const user = await CreateTicketService({
       num_func,
       prioridade,
+      assunto,
       mensagem,
       emailCopia,
     });

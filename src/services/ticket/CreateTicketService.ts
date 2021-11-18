@@ -13,6 +13,7 @@ interface Ticket {
 interface Request {
   num_func: number;
   prioridade: string;
+  assunto: string;
   mensagem: string;
   emailCopia:string[];
 }
@@ -27,6 +28,7 @@ interface  MaxId {
 async function CreateTicketService({
   num_func,
   prioridade,
+  assunto,
   mensagem,
   emailCopia,
 }: Request): Promise<Ticket> {
@@ -52,10 +54,11 @@ async function CreateTicketService({
   const id_mensagem = max_mensagem?.id_mensagem
 
   const ticketAberturaMensagem = await database.oneOrNone<Ticket>(
-    "insert into SOS_MENSAGEM_TICKET values ($[id_mensagem],$[ticket],$[num_func],$[mensagem],null,now()) RETURNING *",
+    "insert into SOS_MENSAGEM_TICKET values ($[id_mensagem],$[ticket],$[num_func],$[mensagem],null,now(),$[assunto]) RETURNING *",
     {
       id_mensagem,
       ticket,
+      assunto,
       num_func,
       mensagem,
     }
@@ -77,7 +80,7 @@ async function CreateTicketService({
 
 
   const ticketReturn = await database.one<Ticket>(
-    `select A.ticket,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade
+    `select A.ticket,b.assunto,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade
     from SOS_ABERTURA_TICKET A
     inner join SOS_MENSAGEM_TICKET b
     on A.ticket =B.TICKET
