@@ -64,21 +64,6 @@ userRouter.post("/step", async (request, response) => {
   }
 });
 
-userRouter.post("/create", async (request, response) => {
-  try {
-    const { num_func, prioridade, mensagem, emailCopia } = request.body;
 
-    const user = await CreateTicketService({
-      num_func,
-      prioridade,
-      mensagem,
-      emailCopia,
-    });
-
-    return response.json(user);
-  } catch ({ message }) {
-    return response.status(400).json({ message: message });
-  }
-});
 
 export default userRouter;
