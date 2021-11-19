@@ -8,6 +8,7 @@ interface Ticket {
   setor?: string;
   email?: string;
   prioridade?: string;
+  email_copia?: string;
 }
 
 interface Request {
@@ -60,12 +61,14 @@ async function CreateNewStepTicketService({
 
 
   const ticketReturn = await database.manyOrNone<Ticket>(
-    `select A.ticket,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade
+    `select A.ticket,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade,d.email_copia
     from SOS_ABERTURA_TICKET A
     inner join SOS_MENSAGEM_TICKET b
     on A.ticket =B.TICKET
     inner join SOS_CAD_USUARIO c
     on a.num_func = c.num_func
+    left join SOS_TICKET_EMAIL_COPIA d
+    on A.ticket =d.TICKET
     where a.ticket = $[ticket]`,
     {
       ticket,
