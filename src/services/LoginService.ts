@@ -2,15 +2,15 @@ import database from "../database";
 import User from "../models/User";
 
 interface Request {
-  num_func: number;
+  email: string;
   senha: string;
 }
 
-export async function LoginService({ num_func,senha }: Request): Promise<User> {
+export async function LoginService({ email,senha }: Request): Promise<User> {
   const user = await database.oneOrNone<User>(
-    "SELECT * FROM sos_cad_usuario WHERE NUM_FUNC = $[num_func] and senha=$[senha]",
+    "SELECT * FROM sos_cad_usuario WHERE email = $[email] and senha=$[senha]",
     {
-      num_func,
+      email,
       senha
     }
   );

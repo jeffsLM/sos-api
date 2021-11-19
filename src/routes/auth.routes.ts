@@ -6,8 +6,8 @@ const authRouter = Router();
 
 authRouter.post('/', async (request, response) => {
   try {
-    const { num_func,senha } = request.body;
-    const user = await LoginService({num_func,senha});
+    const { email,senha } = request.body;
+    const user = await LoginService({email,senha});
 
     return response.json(user);
   } catch (e) {
