@@ -9,6 +9,7 @@ interface Ticket {
   setor_usuario?: string;
   email?: string;
   prioridade?: string;
+  assunto?: string;
   email_copia?: string[];
 }
 
@@ -22,7 +23,7 @@ async function ListTicketService({
 }: Request): Promise<Ticket> {
 
   const ticketReturn = await database.many<Ticket>(
-    `select A.ticket,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade
+    `select A.ticket,b.assunto,b.id_mensagem,b.num_func,c.nome as usuario,b.mensagem,setor as setor_usuario,email,prioridade
     from SOS_ABERTURA_TICKET A
     inner join SOS_MENSAGEM_TICKET b
     on A.ticket =B.TICKET
