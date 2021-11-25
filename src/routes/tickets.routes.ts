@@ -8,7 +8,7 @@ import CreateNewStepTicketService from "../services/ticket/CreateNewStepTicketSe
 
 const userRouter = Router();
 
-userRouter.get("/list", async (request, response) => {
+userRouter.post("/list", async (request, response) => {
   try {
     const { ticket } = request.body;
 
